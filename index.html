@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaCart — Shop what's next</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgMain: '#F8FAFC',
+            surface: '#FFFFFF',
+            surfaceHover: '#F1F5F9',
+            primary: '#4F46E5',
+            primaryGlow: 'rgba(79, 70, 229, 0.2)',
+            secondary: '#9333EA',
+            accent: '#059669',
+            textMain: '#0F172A',
+            textMuted: '#64748B',
+            border: 'rgba(15, 23, 42, 0.08)',
+          },
+          fontFamily: {
+            display: ['"Outfit"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+          },
+          animation: {
+            'blob': 'blob 7s infinite',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'slide-up': 'slideUp 0.5s ease-out forwards',
+            'marquee': 'marquee 25s linear infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-100%)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #0F172A;
+      overflow-x: hidden;
+    }
+
+    /* Glassmorphism utilities for Light Theme */
+    .glass {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 1);
+    }
+
+    .glass-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+
+    /* Text gradients */
+    .text-gradient {
+      background: linear-gradient(to right, #4F46E5, #9333EA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Animated background blobs */
+    .bg-shape {
+      position: absolute;
+      filter: blur(90px);
+      z-index: -1;
+      opacity: 0.6;
+      border-radius: 50%;
+    }
+
+    .cat-btn {
+      transition: all 0.3s ease;
+    }
+
+    .cat-btn[data-active="true"] {
+      background: linear-gradient(to right, #4F46E5, #9333EA);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.25);
+    }
+
+    .product-img-wrapper {
+      overflow: hidden;
+    }
+
+    .product-img-wrapper img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .group:hover .product-img-wrapper img {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="font-body antialiased selection:bg-primary selection:text-white">
+
+  <!-- Background animated blobs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
+    <div class="bg-shape w-[500px] h-[500px] bg-primary/10 top-[-10%] left-[-10%] animate-blob"></div>
+    <div class="bg-shape w-[600px] h-[600px] bg-secondary/10 top-[20%] right-[-10%] animate-blob animation-delay-2000">
+    </div>
+    <div class="bg-shape w-[400px] h-[400px] bg-accent/10 bottom-[-10%] left-[20%] animate-blob animation-delay-4000">
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 glass transition-all duration-300" id="header">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#top" class="font-display font-bold text-2xl tracking-tight flex items-center gap-1 group">
+        <span class="text-textMain">NOVA</span><span class="text-gradient">CART</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-textMuted">
+        <a href="#shop" class="hover:text-primary transition-colors">Shop</a>
+        <a href="#deals" class="hover:text-primary transition-colors">Deals</a>
+        <a href="#about" class="hover:text-primary transition-colors">About</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <button id="menu-btn" class="md:hidden text-textMain p-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button id="cart-btn"
+          class="relative flex items-center gap-2 bg-surface hover:bg-surfaceHover text-textMain px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border border-border hover:border-textMuted/30 shadow-sm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span class="hidden sm:inline">Cart</span>
+          <span id="cart-count"
+            class="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-secondary text-white rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold shadow-[0_4px_10px_rgba(79,70,229,0.3)]">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+      class="absolute top-20 left-0 w-full glass border-b border-border hidden flex-col p-4 shadow-xl">
+      <a href="#shop"
+        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">Shop</a>
+      <a href="#deals"
+        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">Deals</a>
+      <a href="#about"
+        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">About</a>
+    </div>
+  </header>
+
+  <main id="top" class="pt-24">
+
+    <!-- HERO -->
+    <section
+      class="max-w-7xl mx-auto px-6 pt-16 pb-24 grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center min-h-[85vh]">
+      <div class="animate-slide-up">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          New drops every Friday
+        </div>
+        <h1
+          class="font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-[1.1] tracking-tight mb-6 text-textMain">
+          Shop what's<br>
+          <span class="text-gradient">next</span>, priced<br>
+          plainly.
+        </h1>
+        <p class="text-textMuted max-w-lg text-lg leading-relaxed mb-10">
+          Experience premium quality without the mystery mark-ups. Elevate your lifestyle with our curated collection of
+          forward-thinking products.
+        </p>
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#shop"
+            class="bg-textMain text-white hover:bg-primary px-8 py-4 rounded-full font-medium transition-all shadow-[0_10px_20px_rgba(15,23,42,0.15)] hover:shadow-[0_10px_25px_rgba(79,70,229,0.25)] hover:-translate-y-1">Explore
+            Collection</a>
+          <a href="#deals"
+            class="px-8 py-4 rounded-full font-medium border border-border hover:bg-surfaceHover bg-surface transition-all hover:-translate-y-1 shadow-sm">View
+            Deals</a>
+        </div>
+
+        <div class="mt-16 grid grid-cols-3 gap-6 pt-8 border-t border-border">
+          <div>
+            <h4 class="font-display font-bold text-2xl text-primary">99%</h4>
+            <p class="text-textMuted text-sm mt-1 font-medium">Satisfaction rate</p>
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-2xl text-secondary">24h</h4>
+            <p class="text-textMuted text-sm mt-1 font-medium">Fast delivery</p>
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-2xl text-accent">12k+</h4>
+            <p class="text-textMuted text-sm mt-1 font-medium">Premium items</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="relative w-full h-[500px] lg:h-[600px] rounded-3xl overflow-hidden glass-card p-2 group animate-fade-in animation-delay-300">
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent z-10 pointer-events-none rounded-3xl">
+        </div>
+        <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=1200&q=80"
+          alt="Premium lifestyle accessories"
+          class="w-full h-full object-cover rounded-[1.25rem] group-hover:scale-105 transition-transform duration-700 ease-out shadow-inner">
+
+        <!-- Floating Element 1 -->
+        <div
+          class="absolute top-8 -left-4 glass-card p-4 rounded-2xl flex items-center gap-4 z-20 shadow-xl animate-slide-up animation-delay-500">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=100&q=80"
+            class="w-12 h-12 rounded-lg object-cover shadow-md" alt="Headphones">
+          <div>
+            <p class="font-display font-semibold text-sm text-textMain">Aether Pro</p>
+            <p class="text-xs text-primary font-bold mt-0.5">$249.00</p>
+          </div>
+        </div>
+
+        <!-- Floating Element 2 -->
+        <div
+          class="absolute bottom-8 -right-4 glass-card p-4 rounded-2xl flex items-center gap-4 z-20 shadow-xl animate-slide-up animation-delay-700">
+          <div
+            class="bg-gradient-to-br from-secondary to-primary w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-display font-semibold text-sm text-textMain">Flash Sale</p>
+            <p class="text-xs text-textMuted mt-0.5 font-medium">Ends in 2:45:00</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="border-y border-border bg-surface/50 py-16 relative overflow-hidden backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+          <div
+            class="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 text-primary">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12l5 5L20 7" />
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Premium Quality</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Every item is rigorously tested and verified for quality to
+            ensure it meets our high standards.</p>
+        </div>
+        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+          <div
+            class="w-12 h-12 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center mb-6 text-secondary">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Fast Global Shipping</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Get your orders quickly with our optimized logistics
+            network. Free shipping on orders over $100.</p>
+        </div>
+        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+          <div
+            class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 text-accent">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+          </div>
+          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Secure Checkout</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Your data is protected with industry-leading encryption. Buy
+            with total peace of mind.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEALS MARQUEE -->
+    <section id="deals"
+      class="py-6 border-b border-border bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 overflow-hidden relative">
+      <div class="flex whitespace-nowrap">
+        <div class="animate-marquee flex items-center gap-12 text-sm font-bold tracking-widest uppercase text-textMain">
+          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Summer Sale: Up to 50%
+            Off</span>
+          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> Free Shipping
+            Worldwide</span>
+          <span class="flex items-center gap-2"><span class="text-accent text-lg">✦</span> New Tech Arrivals</span>
+          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Member Exclusive
+            Deals</span>
+          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> 30-Day Easy Returns</span>
+        </div>
+        <div
+          class="animate-marquee flex items-center gap-12 text-sm font-bold tracking-widest uppercase text-textMain absolute top-6"
+          style="animation-delay: -12.5s; left: 100%;">
+          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Summer Sale: Up to 50%
+            Off</span>
+          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> Free Shipping
+            Worldwide</span>
+          <span class="flex items-center gap-2"><span class="text-accent text-lg">✦</span> New Tech Arrivals</span>
+          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Member Exclusive
+            Deals</span>
+          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> 30-Day Easy Returns</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <section id="shop" class="max-w-7xl mx-auto px-6 py-24">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <p class="text-primary font-bold tracking-wider text-sm uppercase mb-2">Our Collection</p>
+          <h2 class="font-display font-bold text-4xl sm:text-5xl tracking-tight text-textMain">Curated <span
+              class="text-gradient">Essentials</span></h2>
+        </div>
+        <p class="text-textMuted font-medium"><span id="result-count" class="text-textMain text-lg font-bold">16</span>
+          items found</p>
+      </div>
+
+      <!-- Filter Categories -->
+      <div class="flex gap-4 overflow-x-auto pb-6 mb-8 snap-x no-scrollbar" id="category-rail">
+        <button data-cat="all" data-active="true"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">All
+          Products</button>
+        <button data-cat="electronics"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Electronics</button>
+        <button data-cat="apparel"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Apparel</button>
+        <button data-cat="home"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Home</button>
+        <button data-cat="beauty"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Beauty</button>
+        <button data-cat="sport"
+          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Sports</button>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="about" class="max-w-7xl mx-auto px-6 pb-24">
+      <div
+        class="glass-card rounded-[2.5rem] p-10 sm:p-16 relative overflow-hidden bg-gradient-to-br from-surface to-bgMain">
+        <!-- Decor -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] z-0 pointer-events-none">
+        </div>
+
+        <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="font-display font-bold text-4xl mb-4 text-textMain">Join the Inner Circle</h2>
+            <p class="text-textMuted text-lg leading-relaxed mb-8 font-medium">Get exclusive access to limited drops,
+              insider pricing, and priority shipping before anyone else.</p>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+              <div class="flex -space-x-3">
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
+                  class="w-10 h-10 rounded-full border-2 border-white z-30 shadow-sm" alt="User">
+                <img
+                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
+                  class="w-10 h-10 rounded-full border-2 border-white z-20 shadow-sm" alt="User">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
+                  class="w-10 h-10 rounded-full border-2 border-white z-10 shadow-sm" alt="User">
+              </div>
+              <p><span class="text-primary font-bold">10k+</span> members already joined</p>
+            </div>
+          </div>
+
+          <div class="bg-surface/60 backdrop-blur-xl rounded-3xl p-8 border border-white shadow-lg">
+            <form id="newsletter-form" class="space-y-4">
+              <div>
+                <label for="email-input" class="block text-sm font-semibold text-textMain mb-2">Email Address</label>
+                <input id="email-input" type="email" required placeholder="Enter your email"
+                  class="w-full bg-white border border-border rounded-xl px-5 py-4 text-textMain placeholder:text-textMuted/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner">
+              </div>
+              <button type="submit"
+                class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(79,70,229,0.25)]">
+                Subscribe Now
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <p id="newsletter-msg"
+                class="text-accent text-sm text-center opacity-0 transition-opacity mt-4 font-bold">✨ Welcome to the
+                Inner Circle!</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-border bg-surface pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div class="col-span-2 md:col-span-1">
+          <a href="#top" class="font-display font-bold text-2xl tracking-tight mb-4 inline-block">
+            NOVA<span class="text-gradient">CART</span>
+          </a>
+          <p class="text-textMuted text-sm leading-relaxed mb-6 font-medium">Redefining online shopping with premium
+            products and transparent pricing.</p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4 text-textMain">Shop</h4>
+          <ul class="space-y-3 text-sm text-textMuted font-medium">
+            <li><a href="#" class="hover:text-primary transition-colors">New Arrivals</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Best Sellers</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Electronics</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Apparel</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4 text-textMain">Support</h4>
+          <ul class="space-y-3 text-sm text-textMuted font-medium">
+            <li><a href="#" class="hover:text-primary transition-colors">FAQ</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Shipping</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Returns</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4 text-textMain">Socials</h4>
+          <ul class="space-y-3 text-sm text-textMuted font-medium">
+            <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">Twitter</a></li>
+            <li><a href="#" class="hover:text-primary transition-colors">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-textMuted font-medium">
+        <p>© 2026 NovaCart. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-textMain transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-textMain transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast"
+    class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-50 bg-textMain text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300">
+    <div class="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <span class="font-semibold text-sm">Successfully added to cart</span>
+  </div>
+
+  <script>
+    // Products Data
+    const products = [
+      { id: 1, name: "Aether Pro Headphones", cat: "electronics", price: 249, old: 299, badge: "Hot", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" },
+      { id: 2, name: "Lumina Smart Watch", cat: "electronics", price: 189, old: null, badge: null, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" },
+      { id: 3, name: "Orbit Minimalist Speaker", cat: "electronics", price: 129, old: 150, badge: "Sale", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80" },
+      { id: 4, name: "Arc Architecture Lamp", cat: "home", price: 85, old: null, badge: null, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80" },
+      { id: 5, name: "Nordic Lounge Chair", cat: "home", price: 349, old: 400, badge: "Sale", image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=900&q=80" },
+      { id: 6, name: "Artisan Coffee Maker", cat: "home", price: 120, old: null, badge: "New", image: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=900&q=80" },
+      { id: 7, name: "Urban Tech Hoodie", cat: "apparel", price: 75, old: null, badge: null, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80" },
+      { id: 8, name: "Classic Denim Jacket", cat: "apparel", price: 110, old: 130, badge: "Sale", image: "https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?auto=format&fit=crop&w=900&q=80" },
+      { id: 9, name: "Premium Cotton Tee", cat: "apparel", price: 35, old: null, badge: null, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" },
+      { id: 10, name: "Silk Hydration Serum", cat: "beauty", price: 48, old: null, badge: "New", image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80" },
+      { id: 11, name: "Botanical Face Oil", cat: "beauty", price: 55, old: 65, badge: "Sale", image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80" },
+      { id: 12, name: "Rose Quartz Roller", cat: "beauty", price: 28, old: null, badge: null, image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=900&q=80" },
+      { id: 13, name: "Aero Running Shoes", cat: "sport", price: 145, old: null, badge: "Hot", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" },
+      { id: 14, name: "Pro Yoga Mat", cat: "sport", price: 65, old: 80, badge: "Sale", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?auto=format&fit=crop&w=900&q=80" },
+      { id: 15, name: "Insulated Flask", cat: "sport", price: 32, old: null, badge: null, image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=80" },
+      { id: 16, name: "Nova Pods Gen 2", cat: "electronics", price: 159, old: null, badge: "New", image: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=900&q=80" },
+    ];
+
+    const grid = document.getElementById('product-grid');
+    const resultCount = document.getElementById('result-count');
+    let activeCat = 'all';
+    let cartCount = 0;
+
+    function productCard(p) {
+      const hasOld = p.old !== null;
+      let badgeHtml = '';
+      if (p.badge) {
+        let badgeColor = p.badge === 'Sale' ? 'bg-secondary' : (p.badge === 'Hot' ? 'bg-primary' : 'bg-accent');
+        badgeHtml = `<span class="absolute top-4 left-4 ${badgeColor} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full z-10 shadow-md">${p.badge}</span>`;
+      }
+
+      return `
+      <article class="group glass-card rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300" data-cat="${p.cat}">
+        <div class="relative product-img-wrapper aspect-square bg-surfaceHover">
+          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
+          ${badgeHtml}
+          
+          <!-- Hover Overlay -->
+          <div class="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+            <button class="add-btn bg-textMain text-white hover:bg-primary font-bold text-sm px-6 py-3 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl" data-id="${p.id}">
+              Quick Add
+            </button>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <p class="text-xs uppercase tracking-wider text-textMuted font-bold">${p.cat}</p>
+            <div class="flex gap-0.5 text-accent text-[10px]">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+          </div>
+          <h3 class="font-display font-bold text-lg text-textMain mb-3 truncate" title="${p.name}">${p.name}</h3>
+          <div class="flex items-center gap-3">
+            <span class="font-extrabold text-lg text-primary">$${p.price}</span>
+            ${hasOld ? `<span class="text-textMuted line-through text-sm font-medium">$${p.old}</span>` : ''}
+          </div>
+        </div>
+      </article>
+    `;
+    }
+
+    function render() {
+      const filtered = activeCat === 'all' ? products : products.filter(p => p.cat === activeCat);
+      grid.innerHTML = filtered.map(productCard).join('');
+      resultCount.textContent = filtered.length;
+    }
+
+    render();
+
+    // Category filter
+    document.getElementById('category-rail').addEventListener('click', (e) => {
+      const btn = e.target.closest('.cat-btn');
+      if (!btn) return;
+      activeCat = btn.dataset.cat;
+
+      document.querySelectorAll('.cat-btn').forEach(c => {
+        c.dataset.active = 'false';
+        c.classList.remove('text-white');
+        c.classList.add('text-textMuted');
+      });
+
+      btn.dataset.active = 'true';
+      btn.classList.remove('text-textMuted');
+      btn.classList.add('text-white');
+
+      // Animate grid out and in
+      grid.style.opacity = '0';
+      grid.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        render();
+        grid.style.opacity = '1';
+        grid.style.transform = 'translateY(0)';
+        grid.style.transition = 'all 0.4s ease';
+      }, 200);
+    });
+
+    // Add to cart toast
+    const cartCountEl = document.getElementById('cart-count');
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.add-btn');
+      if (!btn) return;
+
+      // Add button animation
+      btn.innerHTML = 'Added ✓';
+      btn.classList.add('bg-accent', 'text-white');
+
+      setTimeout(() => {
+        btn.innerHTML = 'Quick Add';
+        btn.classList.remove('bg-accent', 'text-white');
+      }, 2000);
+
+      cartCount += 1;
+      cartCountEl.textContent = cartCount;
+
+      // Animate count bump
+      cartCountEl.style.transform = 'scale(1.5)';
+      setTimeout(() => cartCountEl.style.transform = 'scale(1)', 200);
+
+      showToast();
+    });
+
+    function showToast() {
+      clearTimeout(toastTimer);
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2500);
+    }
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        header.classList.add('shadow-md', 'bg-surface/90');
+        header.classList.remove('glass');
+      } else {
+        header.classList.remove('shadow-md', 'bg-surface/90');
+        header.classList.add('glass');
+      }
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+      });
+    });
+
+    // Newsletter
+    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('newsletter-msg');
+      const btn = e.target.querySelector('button');
+      const originalText = btn.innerHTML;
+
+      btn.innerHTML = 'Subscribing...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        msg.style.opacity = '1';
+        btn.innerHTML = 'Subscribed ✓';
+        btn.classList.add('from-accent', 'to-accent');
+        e.target.reset();
+
+        setTimeout(() => {
+          msg.style.opacity = '0';
+          btn.innerHTML = originalText;
+          btn.classList.remove('from-accent', 'to-accent');
+          btn.disabled = false;
+        }, 3000);
+      }, 800);
+    });
+  </script>
+
+</body>
+
+</html>
