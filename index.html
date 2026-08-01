@@ -1,698 +1,745 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaCart — Shop what's next</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bgMain: '#F8FAFC',
-            surface: '#FFFFFF',
-            surfaceHover: '#F1F5F9',
-            primary: '#4F46E5',
-            primaryGlow: 'rgba(79, 70, 229, 0.2)',
-            secondary: '#9333EA',
-            accent: '#059669',
-            textMain: '#0F172A',
-            textMuted: '#64748B',
-            border: 'rgba(15, 23, 42, 0.08)',
-          },
-          fontFamily: {
-            display: ['"Outfit"', 'sans-serif'],
-            body: ['"Inter"', 'sans-serif'],
-          },
-          animation: {
-            'blob': 'blob 7s infinite',
-            'fade-in': 'fadeIn 0.5s ease-out forwards',
-            'slide-up': 'slideUp 0.5s ease-out forwards',
-            'marquee': 'marquee 25s linear infinite',
-          },
-          keyframes: {
-            blob: {
-              '0%': { transform: 'translate(0px, 0px) scale(1)' },
-              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-              '100%': { transform: 'translate(0px, 0px) scale(1)' },
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            marquee: {
-              '0%': { transform: 'translateX(0%)' },
-              '100%': { transform: 'translateX(-100%)' },
-            }
-          }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Cart — Everyday finds, better priced.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper: '#F6F5F1',
+          paperDeep: '#ECE7DD',
+          ink: '#16140F',
+          stone: '#7A7368',
+          line: '#E1DCCF',
+          nova: { coral: '#FF4B36', amber: '#FFB238' }
+        },
+        fontFamily: {
+          display: ['Sora', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace']
+        },
+        borderRadius: { xl2: '1.4rem' }
       }
     }
-  </script>
-  <style>
-    body {
-      background-color: #F8FAFC;
-      color: #0F172A;
-      overflow-x: hidden;
+  }
+</script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Sora', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    ::selection { background: #FF4B36; color: #F6F5F1; }
+
+    /* --- Nova burst signature: radiating rays --- */
+    .nova-burst {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+    }
+    .nova-burst svg { width: 100%; height: 100%; }
+    .burst-ray {
+        transform-origin: 250px 250px;
+        animation: burstSpin 40s linear infinite;
+    }
+    @keyframes burstSpin {
+        to { transform: rotate(360deg); }
     }
 
-    /* Glassmorphism utilities for Light Theme */
-    .glass {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 1);
+    /* --- Star-cut sale badge --- */
+    .star-badge {
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        width: 64px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .glass-card {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.08);
+    /* --- Marquee ticker --- */
+    .ticker-track {
+        display: flex;
+        width: max-content;
+        animation: tickerScroll 22s linear infinite;
+    }
+    @keyframes tickerScroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
     }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+    /* --- Reveal on scroll --- */
+    .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    .cat-pill.active {
+        background: #16140F;
+        color: #F6F5F1;
     }
 
-    ::-webkit-scrollbar-track {
-      background: #F1F5F9;
-    }
+    .wishlist-btn.active i { font-weight: 900; color: #FF4B36; }
+    .wishlist-btn.active { border-color: #FF4B36; }
 
-    ::-webkit-scrollbar-thumb {
-      background: #CBD5E1;
-      border-radius: 4px;
+    #toast {
+        transform: translateY(140%);
+        transition: transform 0.35s ease;
     }
+    #toast.show { transform: translateY(0); }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94A3B8;
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.001ms !important;
+            transition-duration: 0.001ms !important;
+        }
     }
-
-    /* Text gradients */
-    .text-gradient {
-      background: linear-gradient(to right, #4F46E5, #9333EA);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Animated background blobs */
-    .bg-shape {
-      position: absolute;
-      filter: blur(90px);
-      z-index: -1;
-      opacity: 0.6;
-      border-radius: 50%;
-    }
-
-    .cat-btn {
-      transition: all 0.3s ease;
-    }
-
-    .cat-btn[data-active="true"] {
-      background: linear-gradient(to right, #4F46E5, #9333EA);
-      color: white;
-      border-color: transparent;
-      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.25);
-    }
-
-    .product-img-wrapper {
-      overflow: hidden;
-    }
-
-    .product-img-wrapper img {
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .group:hover .product-img-wrapper img {
-      transform: scale(1.05);
-    }
-  </style>
+</style>
 </head>
 
-<body class="font-body antialiased selection:bg-primary selection:text-white">
+<body class="bg-paper text-ink antialiased">
 
-  <!-- Background animated blobs -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none z-[-1]">
-    <div class="bg-shape w-[500px] h-[500px] bg-primary/10 top-[-10%] left-[-10%] animate-blob"></div>
-    <div class="bg-shape w-[600px] h-[600px] bg-secondary/10 top-[20%] right-[-10%] animate-blob animation-delay-2000">
+<!-- Announcement ticker -->
+<div class="bg-ink text-paper overflow-hidden">
+    <div class="ticker-track py-2 text-xs font-mono tracking-wide">
+        <span class="px-8">FREE SHIPPING ON ORDERS OVER $50</span>
+        <span class="px-8 text-nova-amber">•</span>
+        <span class="px-8">NEW ARRIVALS DROP EVERY FRIDAY</span>
+        <span class="px-8 text-nova-amber">•</span>
+        <span class="px-8">30-DAY EASY RETURNS</span>
+        <span class="px-8 text-nova-amber">•</span>
+        <span class="px-8">FREE SHIPPING ON ORDERS OVER $50</span>
+        <span class="px-8 text-nova-amber">•</span>
+        <span class="px-8">NEW ARRIVALS DROP EVERY FRIDAY</span>
+        <span class="px-8 text-nova-amber">•</span>
+        <span class="px-8">30-DAY EASY RETURNS</span>
+        <span class="px-8 text-nova-amber">•</span>
     </div>
-    <div class="bg-shape w-[400px] h-[400px] bg-accent/10 bottom-[-10%] left-[20%] animate-blob animation-delay-4000">
-    </div>
-  </div>
+</div>
 
-  <!-- HEADER -->
-  <header class="fixed top-0 w-full z-50 glass transition-all duration-300" id="header">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <a href="#top" class="font-display font-bold text-2xl tracking-tight flex items-center gap-1 group">
-        <span class="text-textMain">NOVA</span><span class="text-gradient">CART</span>
-      </a>
+<!-- Nav -->
+<header id="navbar" class="sticky top-0 z-40 bg-paper/90 backdrop-blur border-b border-line transition-all">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between gap-4">
+        <a href="#home" class="flex items-center gap-2 shrink-0">
+            <span class="w-8 h-8 rounded-full bg-gradient-to-br from-nova-coral to-nova-amber grid place-items-center text-paper">
+                <i class="fa-solid fa-burst text-sm"></i>
+            </span>
+            <span class="font-display font-bold text-lg tracking-tight">Nova Cart</span>
+        </a>
 
-      <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-textMuted">
-        <a href="#shop" class="hover:text-primary transition-colors">Shop</a>
-        <a href="#deals" class="hover:text-primary transition-colors">Deals</a>
-        <a href="#about" class="hover:text-primary transition-colors">About</a>
-      </nav>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone">
+            <a href="#shop" class="hover:text-ink transition-colors">Shop</a>
+            <a href="#deals" class="hover:text-ink transition-colors">Deals</a>
+            <a href="#trust" class="hover:text-ink transition-colors">Why Nova</a>
+            <a href="#newsletter" class="hover:text-ink transition-colors">Newsletter</a>
+        </nav>
 
-      <div class="flex items-center gap-4">
-        <button id="menu-btn" class="md:hidden text-textMain p-2">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round" />
-          </svg>
-        </button>
-        <button id="cart-btn"
-          class="relative flex items-center gap-2 bg-surface hover:bg-surfaceHover text-textMain px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border border-border hover:border-textMuted/30 shadow-sm">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-          </svg>
-          <span class="hidden sm:inline">Cart</span>
-          <span id="cart-count"
-            class="absolute -top-1 -right-1 bg-gradient-to-r from-primary to-secondary text-white rounded-full w-5 h-5 flex items-center justify-center text-[11px] font-bold shadow-[0_4px_10px_rgba(79,70,229,0.3)]">0</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu"
-      class="absolute top-20 left-0 w-full glass border-b border-border hidden flex-col p-4 shadow-xl">
-      <a href="#shop"
-        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">Shop</a>
-      <a href="#deals"
-        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">Deals</a>
-      <a href="#about"
-        class="p-4 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors">About</a>
-    </div>
-  </header>
-
-  <main id="top" class="pt-24">
-
-    <!-- HERO -->
-    <section
-      class="max-w-7xl mx-auto px-6 pt-16 pb-24 grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center min-h-[85vh]">
-      <div class="animate-slide-up">
-        <div
-          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          New drops every Friday
-        </div>
-        <h1
-          class="font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-[1.1] tracking-tight mb-6 text-textMain">
-          Shop what's<br>
-          <span class="text-gradient">next</span>, priced<br>
-          plainly.
-        </h1>
-        <p class="text-textMuted max-w-lg text-lg leading-relaxed mb-10">
-          Experience premium quality without the mystery mark-ups. Elevate your lifestyle with our curated collection of
-          forward-thinking products.
-        </p>
-        <div class="flex flex-wrap items-center gap-4">
-          <a href="#shop"
-            class="bg-textMain text-white hover:bg-primary px-8 py-4 rounded-full font-medium transition-all shadow-[0_10px_20px_rgba(15,23,42,0.15)] hover:shadow-[0_10px_25px_rgba(79,70,229,0.25)] hover:-translate-y-1">Explore
-            Collection</a>
-          <a href="#deals"
-            class="px-8 py-4 rounded-full font-medium border border-border hover:bg-surfaceHover bg-surface transition-all hover:-translate-y-1 shadow-sm">View
-            Deals</a>
-        </div>
-
-        <div class="mt-16 grid grid-cols-3 gap-6 pt-8 border-t border-border">
-          <div>
-            <h4 class="font-display font-bold text-2xl text-primary">99%</h4>
-            <p class="text-textMuted text-sm mt-1 font-medium">Satisfaction rate</p>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-2xl text-secondary">24h</h4>
-            <p class="text-textMuted text-sm mt-1 font-medium">Fast delivery</p>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-2xl text-accent">12k+</h4>
-            <p class="text-textMuted text-sm mt-1 font-medium">Premium items</p>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="relative w-full h-[500px] lg:h-[600px] rounded-3xl overflow-hidden glass-card p-2 group animate-fade-in animation-delay-300">
-        <div
-          class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent z-10 pointer-events-none rounded-3xl">
-        </div>
-        <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=1200&q=80"
-          alt="Premium lifestyle accessories"
-          class="w-full h-full object-cover rounded-[1.25rem] group-hover:scale-105 transition-transform duration-700 ease-out shadow-inner">
-
-        <!-- Floating Element 1 -->
-        <div
-          class="absolute top-8 -left-4 glass-card p-4 rounded-2xl flex items-center gap-4 z-20 shadow-xl animate-slide-up animation-delay-500">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=100&q=80"
-            class="w-12 h-12 rounded-lg object-cover shadow-md" alt="Headphones">
-          <div>
-            <p class="font-display font-semibold text-sm text-textMain">Aether Pro</p>
-            <p class="text-xs text-primary font-bold mt-0.5">$249.00</p>
-          </div>
-        </div>
-
-        <!-- Floating Element 2 -->
-        <div
-          class="absolute bottom-8 -right-4 glass-card p-4 rounded-2xl flex items-center gap-4 z-20 shadow-xl animate-slide-up animation-delay-700">
-          <div
-            class="bg-gradient-to-br from-secondary to-primary w-12 h-12 rounded-lg flex items-center justify-center shadow-md">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </div>
-          <div>
-            <p class="font-display font-semibold text-sm text-textMain">Flash Sale</p>
-            <p class="text-xs text-textMuted mt-0.5 font-medium">Ends in 2:45:00</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="border-y border-border bg-surface/50 py-16 relative overflow-hidden backdrop-blur-md">
-      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-          <div
-            class="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 text-primary">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12l5 5L20 7" />
-            </svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Premium Quality</h3>
-          <p class="text-textMuted text-sm leading-relaxed">Every item is rigorously tested and verified for quality to
-            ensure it meets our high standards.</p>
-        </div>
-        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-          <div
-            class="w-12 h-12 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center mb-6 text-secondary">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Fast Global Shipping</h3>
-          <p class="text-textMuted text-sm leading-relaxed">Get your orders quickly with our optimized logistics
-            network. Free shipping on orders over $100.</p>
-        </div>
-        <div class="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-          <div
-            class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 text-accent">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            </svg>
-          </div>
-          <h3 class="font-display font-bold text-xl mb-3 text-textMain">Secure Checkout</h3>
-          <p class="text-textMuted text-sm leading-relaxed">Your data is protected with industry-leading encryption. Buy
-            with total peace of mind.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEALS MARQUEE -->
-    <section id="deals"
-      class="py-6 border-b border-border bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 overflow-hidden relative">
-      <div class="flex whitespace-nowrap">
-        <div class="animate-marquee flex items-center gap-12 text-sm font-bold tracking-widest uppercase text-textMain">
-          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Summer Sale: Up to 50%
-            Off</span>
-          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> Free Shipping
-            Worldwide</span>
-          <span class="flex items-center gap-2"><span class="text-accent text-lg">✦</span> New Tech Arrivals</span>
-          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Member Exclusive
-            Deals</span>
-          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> 30-Day Easy Returns</span>
-        </div>
-        <div
-          class="animate-marquee flex items-center gap-12 text-sm font-bold tracking-widest uppercase text-textMain absolute top-6"
-          style="animation-delay: -12.5s; left: 100%;">
-          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Summer Sale: Up to 50%
-            Off</span>
-          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> Free Shipping
-            Worldwide</span>
-          <span class="flex items-center gap-2"><span class="text-accent text-lg">✦</span> New Tech Arrivals</span>
-          <span class="flex items-center gap-2"><span class="text-primary text-lg">✦</span> Member Exclusive
-            Deals</span>
-          <span class="flex items-center gap-2"><span class="text-secondary text-lg">✦</span> 30-Day Easy Returns</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- SHOP SECTION -->
-    <section id="shop" class="max-w-7xl mx-auto px-6 py-24">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <p class="text-primary font-bold tracking-wider text-sm uppercase mb-2">Our Collection</p>
-          <h2 class="font-display font-bold text-4xl sm:text-5xl tracking-tight text-textMain">Curated <span
-              class="text-gradient">Essentials</span></h2>
-        </div>
-        <p class="text-textMuted font-medium"><span id="result-count" class="text-textMain text-lg font-bold">16</span>
-          items found</p>
-      </div>
-
-      <!-- Filter Categories -->
-      <div class="flex gap-4 overflow-x-auto pb-6 mb-8 snap-x no-scrollbar" id="category-rail">
-        <button data-cat="all" data-active="true"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">All
-          Products</button>
-        <button data-cat="electronics"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Electronics</button>
-        <button data-cat="apparel"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Apparel</button>
-        <button data-cat="home"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Home</button>
-        <button data-cat="beauty"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Beauty</button>
-        <button data-cat="sport"
-          class="cat-btn snap-start shrink-0 bg-surface border border-border px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-surfaceHover shadow-sm text-textMuted">Sports</button>
-      </div>
-
-      <!-- Product Grid -->
-      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-    </section>
-
-    <!-- NEWSLETTER -->
-    <section id="about" class="max-w-7xl mx-auto px-6 pb-24">
-      <div
-        class="glass-card rounded-[2.5rem] p-10 sm:p-16 relative overflow-hidden bg-gradient-to-br from-surface to-bgMain">
-        <!-- Decor -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] z-0 pointer-events-none">
-        </div>
-
-        <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 class="font-display font-bold text-4xl mb-4 text-textMain">Join the Inner Circle</h2>
-            <p class="text-textMuted text-lg leading-relaxed mb-8 font-medium">Get exclusive access to limited drops,
-              insider pricing, and priority shipping before anyone else.</p>
-
-            <div class="flex items-center gap-4 text-sm font-medium">
-              <div class="flex -space-x-3">
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
-                  class="w-10 h-10 rounded-full border-2 border-white z-30 shadow-sm" alt="User">
-                <img
-                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
-                  class="w-10 h-10 rounded-full border-2 border-white z-20 shadow-sm" alt="User">
-                <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=100&h=100&q=80"
-                  class="w-10 h-10 rounded-full border-2 border-white z-10 shadow-sm" alt="User">
-              </div>
-              <p><span class="text-primary font-bold">10k+</span> members already joined</p>
+        <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center bg-white border border-line rounded-full px-3.5 py-2 w-56 lg:w-64">
+                <i class="fa-solid fa-magnifying-glass text-stone text-sm"></i>
+                <input type="text" placeholder="Search products…" class="bg-transparent outline-none text-sm ml-2.5 w-full placeholder:text-stone/70">
             </div>
-          </div>
-
-          <div class="bg-surface/60 backdrop-blur-xl rounded-3xl p-8 border border-white shadow-lg">
-            <form id="newsletter-form" class="space-y-4">
-              <div>
-                <label for="email-input" class="block text-sm font-semibold text-textMain mb-2">Email Address</label>
-                <input id="email-input" type="email" required placeholder="Enter your email"
-                  class="w-full bg-white border border-border rounded-xl px-5 py-4 text-textMain placeholder:text-textMuted/60 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-inner">
-              </div>
-              <button type="submit"
-                class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(79,70,229,0.25)]">
-                Subscribe Now
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-              <p id="newsletter-msg"
-                class="text-accent text-sm text-center opacity-0 transition-opacity mt-4 font-bold">✨ Welcome to the
-                Inner Circle!</p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-border bg-surface pt-16 pb-8">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-        <div class="col-span-2 md:col-span-1">
-          <a href="#top" class="font-display font-bold text-2xl tracking-tight mb-4 inline-block">
-            NOVA<span class="text-gradient">CART</span>
-          </a>
-          <p class="text-textMuted text-sm leading-relaxed mb-6 font-medium">Redefining online shopping with premium
-            products and transparent pricing.</p>
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-textMain">Shop</h4>
-          <ul class="space-y-3 text-sm text-textMuted font-medium">
-            <li><a href="#" class="hover:text-primary transition-colors">New Arrivals</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Best Sellers</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Electronics</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Apparel</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-textMain">Support</h4>
-          <ul class="space-y-3 text-sm text-textMuted font-medium">
-            <li><a href="#" class="hover:text-primary transition-colors">FAQ</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Shipping</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Returns</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold mb-4 text-textMain">Socials</h4>
-          <ul class="space-y-3 text-sm text-textMuted font-medium">
-            <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">Twitter</a></li>
-            <li><a href="#" class="hover:text-primary transition-colors">TikTok</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div
-        class="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-textMuted font-medium">
-        <p>© 2026 NovaCart. All rights reserved.</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-textMain transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-textMain transition-colors">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- TOAST NOTIFICATION -->
-  <div id="toast"
-    class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-50 bg-textMain text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300">
-    <div class="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"
-        stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
-    </div>
-    <span class="font-semibold text-sm">Successfully added to cart</span>
-  </div>
-
-  <script>
-    // Products Data
-    const products = [
-      { id: 1, name: "Aether Pro Headphones", cat: "electronics", price: 249, old: 299, badge: "Hot", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" },
-      { id: 2, name: "Lumina Smart Watch", cat: "electronics", price: 189, old: null, badge: null, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" },
-      { id: 3, name: "Orbit Minimalist Speaker", cat: "electronics", price: 129, old: 150, badge: "Sale", image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80" },
-      { id: 4, name: "Arc Architecture Lamp", cat: "home", price: 85, old: null, badge: null, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80" },
-      { id: 5, name: "Nordic Lounge Chair", cat: "home", price: 349, old: 400, badge: "Sale", image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=900&q=80" },
-      { id: 6, name: "Artisan Coffee Maker", cat: "home", price: 120, old: null, badge: "New", image: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=900&q=80" },
-      { id: 7, name: "Urban Tech Hoodie", cat: "apparel", price: 75, old: null, badge: null, image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80" },
-      { id: 8, name: "Classic Denim Jacket", cat: "apparel", price: 110, old: 130, badge: "Sale", image: "https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?auto=format&fit=crop&w=900&q=80" },
-      { id: 9, name: "Premium Cotton Tee", cat: "apparel", price: 35, old: null, badge: null, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" },
-      { id: 10, name: "Silk Hydration Serum", cat: "beauty", price: 48, old: null, badge: "New", image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80" },
-      { id: 11, name: "Botanical Face Oil", cat: "beauty", price: 55, old: 65, badge: "Sale", image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=80" },
-      { id: 12, name: "Rose Quartz Roller", cat: "beauty", price: 28, old: null, badge: null, image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=900&q=80" },
-      { id: 13, name: "Aero Running Shoes", cat: "sport", price: 145, old: null, badge: "Hot", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" },
-      { id: 14, name: "Pro Yoga Mat", cat: "sport", price: 65, old: 80, badge: "Sale", image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?auto=format&fit=crop&w=900&q=80" },
-      { id: 15, name: "Insulated Flask", cat: "sport", price: 32, old: null, badge: null, image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=80" },
-      { id: 16, name: "Nova Pods Gen 2", cat: "electronics", price: 159, old: null, badge: "New", image: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=900&q=80" },
-    ];
-
-    const grid = document.getElementById('product-grid');
-    const resultCount = document.getElementById('result-count');
-    let activeCat = 'all';
-    let cartCount = 0;
-
-    function productCard(p) {
-      const hasOld = p.old !== null;
-      let badgeHtml = '';
-      if (p.badge) {
-        let badgeColor = p.badge === 'Sale' ? 'bg-secondary' : (p.badge === 'Hot' ? 'bg-primary' : 'bg-accent');
-        badgeHtml = `<span class="absolute top-4 left-4 ${badgeColor} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full z-10 shadow-md">${p.badge}</span>`;
-      }
-
-      return `
-      <article class="group glass-card rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all duration-300" data-cat="${p.cat}">
-        <div class="relative product-img-wrapper aspect-square bg-surfaceHover">
-          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
-          ${badgeHtml}
-          
-          <!-- Hover Overlay -->
-          <div class="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <button class="add-btn bg-textMain text-white hover:bg-primary font-bold text-sm px-6 py-3 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl" data-id="${p.id}">
-              Quick Add
+            <button class="relative w-10 h-10 rounded-full border border-line grid place-items-center hover:border-ink transition-colors" aria-label="Cart">
+                <i class="fa-solid fa-bag-shopping text-sm"></i>
+                <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-nova-coral text-white text-[10px] font-bold w-5 h-5 rounded-full grid place-items-center">0</span>
             </button>
-          </div>
+            <button id="mobileToggle" class="md:hidden w-10 h-10 grid place-items-center" aria-label="Menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <p class="text-xs uppercase tracking-wider text-textMuted font-bold">${p.cat}</p>
-            <div class="flex gap-0.5 text-accent text-[10px]">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+    </div>
+    <div id="mobilePanel" class="hidden md:hidden border-t border-line bg-paper px-5 py-4 flex flex-col gap-3 text-sm font-medium text-stone">
+        <a href="#shop">Shop</a>
+        <a href="#deals">Deals</a>
+        <a href="#trust">Why Nova</a>
+        <a href="#newsletter">Newsletter</a>
+    </div>
+</header>
+
+<!-- Hero -->
+<section id="home" class="relative overflow-hidden">
+    <div class="nova-burst hidden md:block" style="right:-6%; top:-10%; width:640px; height:640px;">
+        <svg viewBox="0 0 500 500">
+            <g class="burst-ray" stroke="#16140F" stroke-opacity="0.08">
+                <line x1="250" y1="250" x2="250" y2="20" stroke-width="2"/>
+                <line x1="250" y1="250" x2="440" y2="90" stroke-width="2"/>
+                <line x1="250" y1="250" x2="480" y2="250" stroke-width="2"/>
+                <line x1="250" y1="250" x2="440" y2="410" stroke-width="2"/>
+                <line x1="250" y1="250" x2="250" y2="480" stroke-width="2"/>
+                <line x1="250" y1="250" x2="60" y2="410" stroke-width="2"/>
+                <line x1="250" y1="250" x2="20" y2="250" stroke-width="2"/>
+                <line x1="250" y1="250" x2="60" y2="90" stroke-width="2"/>
+            </g>
+            <circle cx="250" cy="250" r="120" fill="url(#novaGrad)" opacity="0.16"/>
+            <defs>
+                <radialGradient id="novaGrad">
+                    <stop offset="0%" stop-color="#FF4B36"/>
+                    <stop offset="100%" stop-color="#FFB238"/>
+                </radialGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-5 md:px-8 pt-14 pb-20 md:pt-20 md:pb-28 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+            <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-nova-coral bg-nova-coral/10 px-3 py-1.5 rounded-full mb-6">
+                <i class="fa-solid fa-burst"></i> Season kickoff sale
+            </span>
+            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-6">
+                Everyday finds,<br>
+                <span class="bg-gradient-to-r from-nova-coral to-nova-amber bg-clip-text text-transparent">better priced.</span>
+            </h1>
+            <p class="text-stone text-lg max-w-md mb-8 leading-relaxed">
+                Curated electronics, home goods, and essentials — vetted for quality, shipped fast, always backed by a 30-day return window.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="#shop" class="bg-ink text-paper font-semibold px-7 py-3.5 rounded-full hover:bg-black transition-colors inline-flex items-center gap-2">
+                    Shop the sale <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+                <a href="#deals" class="border border-line font-semibold px-7 py-3.5 rounded-full hover:border-ink transition-colors">
+                    View today's deals
+                </a>
             </div>
-          </div>
-          <h3 class="font-display font-bold text-lg text-textMain mb-3 truncate" title="${p.name}">${p.name}</h3>
-          <div class="flex items-center gap-3">
-            <span class="font-extrabold text-lg text-primary">$${p.price}</span>
-            ${hasOld ? `<span class="text-textMuted line-through text-sm font-medium">$${p.old}</span>` : ''}
-          </div>
+            <div class="flex items-center gap-6 mt-10 pt-8 border-t border-line text-sm text-stone">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-truck-fast text-nova-coral"></i> Ships in 24h</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-nova-coral"></i> Secure checkout</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-rotate-left text-nova-coral"></i> Easy returns</div>
+            </div>
         </div>
-      </article>
-    `;
-    }
 
-    function render() {
-      const filtered = activeCat === 'all' ? products : products.filter(p => p.cat === activeCat);
-      grid.innerHTML = filtered.map(productCard).join('');
-      resultCount.textContent = filtered.length;
-    }
+        <div class="relative">
+            <div class="aspect-square rounded-xl2 bg-gradient-to-br from-white to-paperDeep border border-line relative overflow-hidden grid place-items-center">
+                <i class="fa-solid fa-headphones-simple text-[9rem] text-ink/10"></i>
+                <div class="absolute top-6 left-6 star-badge bg-nova-coral text-white shadow-lg">
+                    <span class="font-mono font-bold text-xs leading-none text-center">-30%<br>OFF</span>
+                </div>
+                <div class="absolute bottom-6 right-6 bg-white border border-line rounded-2xl px-4 py-3 shadow-sm">
+                    <p class="text-xs text-stone mb-0.5">Featured today</p>
+                    <p class="font-display font-semibold text-sm">Aura Wireless Headphones</p>
+                    <p class="font-mono text-nova-coral font-semibold text-sm mt-1">$89.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    render();
+<!-- Category filter -->
+<section id="shop" class="max-w-7xl mx-auto px-5 md:px-8 pt-4 pb-4">
+    <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
+        <div>
+            <span class="font-mono text-xs uppercase tracking-widest text-stone">Browse</span>
+            <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight">Shop by category</h2>
+        </div>
+        <p class="text-stone text-sm hidden sm:block"><span id="resultCount">9</span> products</p>
+    </div>
+    <div id="categoryRail" class="flex gap-2.5 overflow-x-auto pb-2 -mx-1 px-1">
+        <button data-cat="all" class="cat-pill active whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium transition-colors">All</button>
+        <button data-cat="audio" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium hover:border-ink transition-colors">Audio</button>
+        <button data-cat="home" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium hover:border-ink transition-colors">Home &amp; Living</button>
+        <button data-cat="fashion" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium hover:border-ink transition-colors">Fashion</button>
+        <button data-cat="fitness" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium hover:border-ink transition-colors">Fitness</button>
+        <button data-cat="tech" class="cat-pill whitespace-nowrap px-4 py-2 rounded-full border border-line text-sm font-medium hover:border-ink transition-colors">Tech</button>
+    </div>
+</section>
 
-    // Category filter
-    document.getElementById('category-rail').addEventListener('click', (e) => {
-      const btn = e.target.closest('.cat-btn');
-      if (!btn) return;
-      activeCat = btn.dataset.cat;
+<!-- Product grid -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-10">
+    <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      document.querySelectorAll('.cat-btn').forEach(c => {
-        c.dataset.active = 'false';
-        c.classList.remove('text-white');
-        c.classList.add('text-textMuted');
-      });
+        <div class="product-card reveal" data-cat="audio">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-headphones-simple text-6xl text-ink/15"></i>
+                    <span class="absolute top-3 left-3 bg-ink text-paper text-[11px] font-mono px-2 py-1 rounded-full">SALE</span>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Audio</p>
+                    <h3 class="font-display font-semibold mb-1">Aura Wireless Headphones</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        <span class="text-stone ml-1">(214)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="font-mono font-semibold">$89.00</span>
+                            <span class="font-mono text-stone text-xs line-through ml-1">$129</span>
+                        </div>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      btn.dataset.active = 'true';
-      btn.classList.remove('text-textMuted');
-      btn.classList.add('text-white');
+        <div class="product-card reveal" data-cat="home">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-mug-hot text-6xl text-ink/15"></i>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Home &amp; Living</p>
+                    <h3 class="font-display font-semibold mb-1">Ember Ceramic Mug Set</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                        <span class="text-stone ml-1">(88)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$32.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      // Animate grid out and in
-      grid.style.opacity = '0';
-      grid.style.transform = 'translateY(10px)';
-      setTimeout(() => {
-        render();
-        grid.style.opacity = '1';
-        grid.style.transform = 'translateY(0)';
-        grid.style.transition = 'all 0.4s ease';
-      }, 200);
-    });
+        <div class="product-card reveal" data-cat="fashion">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-glasses text-6xl text-ink/15"></i>
+                    <span class="absolute top-3 left-3 bg-nova-coral text-white text-[11px] font-mono px-2 py-1 rounded-full">NEW</span>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Fashion</p>
+                    <h3 class="font-display font-semibold mb-1">Solstice Sunglasses</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span class="text-stone ml-1">(52)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$54.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    // Add to cart toast
-    const cartCountEl = document.getElementById('cart-count');
-    const toast = document.getElementById('toast');
-    let toastTimer;
+        <div class="product-card reveal" data-cat="fitness">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-dumbbell text-6xl text-ink/15"></i>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Fitness</p>
+                    <h3 class="font-display font-semibold mb-1">Adjustable Dumbbell Set</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        <span class="text-stone ml-1">(163)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$149.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    grid.addEventListener('click', (e) => {
-      const btn = e.target.closest('.add-btn');
-      if (!btn) return;
+        <div class="product-card reveal" data-cat="tech">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-mobile-screen-button text-6xl text-ink/15"></i>
+                    <span class="absolute top-3 left-3 bg-ink text-paper text-[11px] font-mono px-2 py-1 rounded-full">SALE</span>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Tech</p>
+                    <h3 class="font-display font-semibold mb-1">Halo MagSafe Charger</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span class="text-stone ml-1">(310)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="font-mono font-semibold">$24.00</span>
+                            <span class="font-mono text-stone text-xs line-through ml-1">$35</span>
+                        </div>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      // Add button animation
-      btn.innerHTML = 'Added ✓';
-      btn.classList.add('bg-accent', 'text-white');
+        <div class="product-card reveal" data-cat="home">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-seedling text-6xl text-ink/15"></i>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Home &amp; Living</p>
+                    <h3 class="font-display font-semibold mb-1">Terra Planter Trio</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                        <span class="text-stone ml-1">(41)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$46.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      setTimeout(() => {
-        btn.innerHTML = 'Quick Add';
-        btn.classList.remove('bg-accent', 'text-white');
-      }, 2000);
+        <div class="product-card reveal" data-cat="fashion">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-shoe-prints text-6xl text-ink/15"></i>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Fashion</p>
+                    <h3 class="font-display font-semibold mb-1">Drift Canvas Sneakers</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        <span class="text-stone ml-1">(97)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$68.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      cartCount += 1;
-      cartCountEl.textContent = cartCount;
+        <div class="product-card reveal" data-cat="tech">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-camera text-6xl text-ink/15"></i>
+                    <span class="absolute top-3 left-3 bg-nova-coral text-white text-[11px] font-mono px-2 py-1 rounded-full">NEW</span>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Tech</p>
+                    <h3 class="font-display font-semibold mb-1">Pocket Instant Camera</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        <span class="text-stone ml-1">(178)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$112.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      // Animate count bump
-      cartCountEl.style.transform = 'scale(1.5)';
-      setTimeout(() => cartCountEl.style.transform = 'scale(1)', 200);
+        <div class="product-card reveal" data-cat="fitness">
+            <div class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
+                <div class="aspect-square bg-paperDeep relative grid place-items-center">
+                    <i class="fa-solid fa-person-running text-6xl text-ink/15"></i>
+                    <button class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center" aria-label="Save to wishlist">
+                        <i class="fa-regular fa-heart text-sm"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <p class="text-xs text-stone mb-1">Fitness</p>
+                    <h3 class="font-display font-semibold mb-1">Trailblazer Running Vest</h3>
+                    <div class="flex items-center gap-1 text-nova-amber text-xs mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                        <span class="text-stone ml-1">(64)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-semibold">$58.00</span>
+                        <button class="add-to-cart w-10 h-10 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add to cart">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      showToast();
-    });
+    </div>
 
-    function showToast() {
-      clearTimeout(toastTimer);
-      toast.classList.remove('translate-y-24', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      toastTimer = setTimeout(() => {
-        toast.classList.add('translate-y-24', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2500);
-    }
+    <p id="emptyState" class="hidden text-center text-stone py-16">
+        No products in this category yet — check back soon.
+    </p>
+</section>
 
-    // Header scroll effect
-    const header = document.getElementById('header');
+<!-- Promo banner with countdown -->
+<section id="deals" class="max-w-7xl mx-auto px-5 md:px-8 py-6">
+    <div class="reveal relative overflow-hidden rounded-xl2 border border-line bg-ink text-paper px-6 py-10 md:px-14 md:py-14 grid md:grid-cols-2 items-center gap-8">
+        <div class="nova-burst opacity-30" style="left:-10%; top:-30%; width:420px; height:420px;">
+            <svg viewBox="0 0 500 500">
+                <g class="burst-ray" stroke="#FFB238" stroke-opacity="0.5">
+                    <line x1="250" y1="250" x2="250" y2="40" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="420" y2="130" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="460" y2="250" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="420" y2="370" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="250" y2="460" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="80" y2="370" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="40" y2="250" stroke-width="2"/>
+                    <line x1="250" y1="250" x2="80" y2="130" stroke-width="2"/>
+                </g>
+            </svg>
+        </div>
+        <div class="relative z-10">
+            <span class="font-mono text-xs uppercase tracking-widest text-nova-amber">Ends soon</span>
+            <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight mt-2 mb-3">Up to 50% off select tech.</h2>
+            <p class="text-paper/70 max-w-sm">Stock is limited and prices reset once the timer hits zero — no restock guaranteed.</p>
+        </div>
+        <div class="relative z-10 flex md:justify-end">
+            <div id="countdown" class="flex gap-3">
+                <div class="bg-white/10 rounded-xl px-4 py-3 text-center min-w-[72px]">
+                    <p id="cd-hours" class="font-mono text-2xl font-semibold">08</p>
+                    <p class="text-[11px] text-paper/60 mt-1">Hours</p>
+                </div>
+                <div class="bg-white/10 rounded-xl px-4 py-3 text-center min-w-[72px]">
+                    <p id="cd-mins" class="font-mono text-2xl font-semibold">42</p>
+                    <p class="text-[11px] text-paper/60 mt-1">Minutes</p>
+                </div>
+                <div class="bg-white/10 rounded-xl px-4 py-3 text-center min-w-[72px]">
+                    <p id="cd-secs" class="font-mono text-2xl font-semibold">17</p>
+                    <p class="text-[11px] text-paper/60 mt-1">Seconds</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trust strip -->
+<section id="trust" class="max-w-7xl mx-auto px-5 md:px-8 py-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="reveal border border-line rounded-xl2 p-6 bg-white">
+            <i class="fa-solid fa-truck-fast text-nova-coral text-xl mb-4"></i>
+            <h3 class="font-display font-semibold mb-1.5">Fast dispatch</h3>
+            <p class="text-stone text-sm">Orders placed before 2pm ship the same day, every day.</p>
+        </div>
+        <div class="reveal border border-line rounded-xl2 p-6 bg-white">
+            <i class="fa-solid fa-rotate-left text-nova-coral text-xl mb-4"></i>
+            <h3 class="font-display font-semibold mb-1.5">30-day returns</h3>
+            <p class="text-stone text-sm">Not the right fit? Send it back, no questions asked.</p>
+        </div>
+        <div class="reveal border border-line rounded-xl2 p-6 bg-white">
+            <i class="fa-solid fa-shield-halved text-nova-coral text-xl mb-4"></i>
+            <h3 class="font-display font-semibold mb-1.5">Secure checkout</h3>
+            <p class="text-stone text-sm">Every order is encrypted end-to-end at checkout.</p>
+        </div>
+        <div class="reveal border border-line rounded-xl2 p-6 bg-white">
+            <i class="fa-solid fa-headset text-nova-coral text-xl mb-4"></i>
+            <h3 class="font-display font-semibold mb-1.5">Real support</h3>
+            <p class="text-stone text-sm">A human replies to every message within a few hours.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section id="newsletter" class="max-w-7xl mx-auto px-5 md:px-8 pb-20">
+    <div class="reveal bg-paperDeep border border-line rounded-xl2 px-6 py-12 md:px-16 md:py-16 text-center">
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-2">Get first pick on new drops.</h2>
+        <p class="text-stone mb-7 max-w-md mx-auto">One email a week — new arrivals, restocks, and the occasional discount code.</p>
+        <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input id="newsletterEmail" type="email" required placeholder="you@email.com"
+                class="flex-1 bg-white border border-line rounded-full px-5 py-3 text-sm outline-none focus:border-ink transition-colors">
+            <button type="submit" class="bg-ink text-paper font-semibold px-6 py-3 rounded-full hover:bg-black transition-colors">
+                Subscribe
+            </button>
+        </form>
+        <p id="newsletterMsg" class="text-sm text-nova-coral mt-3 hidden"></p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-line">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+            <a href="#home" class="flex items-center gap-2 mb-3">
+                <span class="w-7 h-7 rounded-full bg-gradient-to-br from-nova-coral to-nova-amber grid place-items-center text-paper">
+                    <i class="fa-solid fa-burst text-xs"></i>
+                </span>
+                <span class="font-display font-bold">Nova Cart</span>
+            </a>
+            <p class="text-stone text-sm max-w-[220px]">Everyday products, carefully chosen, fairly priced.</p>
+        </div>
+        <div>
+            <h4 class="font-mono text-xs uppercase tracking-widest text-stone mb-4">Shop</h4>
+            <div class="flex flex-col gap-2.5 text-sm text-stone">
+                <a href="#shop" class="hover:text-ink transition-colors">All products</a>
+                <a href="#deals" class="hover:text-ink transition-colors">Today's deals</a>
+                <a href="#shop" class="hover:text-ink transition-colors">New arrivals</a>
+            </div>
+        </div>
+        <div>
+            <h4 class="font-mono text-xs uppercase tracking-widest text-stone mb-4">Help</h4>
+            <div class="flex flex-col gap-2.5 text-sm text-stone">
+                <a href="#" class="hover:text-ink transition-colors">Shipping &amp; returns</a>
+                <a href="#" class="hover:text-ink transition-colors">Track an order</a>
+                <a href="#" class="hover:text-ink transition-colors">Contact support</a>
+            </div>
+        </div>
+        <div>
+            <h4 class="font-mono text-xs uppercase tracking-widest text-stone mb-4">Follow</h4>
+            <div class="flex gap-3 text-stone">
+                <a href="#" class="w-9 h-9 rounded-full border border-line grid place-items-center hover:border-ink hover:text-ink transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-9 h-9 rounded-full border border-line grid place-items-center hover:border-ink hover:text-ink transition-colors" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="w-9 h-9 rounded-full border border-line grid place-items-center hover:border-ink hover:text-ink transition-colors" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="border-t border-line max-w-7xl mx-auto px-5 md:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-stone">
+        <p>&copy; 2026 Nova Cart. All rights reserved.</p>
+        <div class="flex items-center gap-3 text-lg">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-paypal"></i>
+            <i class="fa-brands fa-cc-apple-pay"></i>
+        </div>
+    </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ink text-paper text-sm font-medium px-5 py-3 rounded-full shadow-lg flex items-center gap-2 z-50">
+    <i class="fa-solid fa-circle-check text-nova-amber"></i>
+    <span id="toastText">Added to cart</span>
+</div>
+
+<script>
+    // Sticky nav shadow
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 20) {
-        header.classList.add('shadow-md', 'bg-surface/90');
-        header.classList.remove('glass');
-      } else {
-        header.classList.remove('shadow-md', 'bg-surface/90');
-        header.classList.add('glass');
-      }
+        navbar.classList.toggle('shadow-sm', window.scrollY > 10);
     });
 
     // Mobile menu
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      mobileMenu.classList.toggle('flex');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    mobileToggle.addEventListener('click', () => {
+        const isHidden = mobilePanel.classList.toggle('hidden');
+        mobileToggle.setAttribute('aria-expanded', !isHidden);
     });
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-      });
+    mobilePanel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobilePanel.classList.add('hidden')));
+
+    // Category filtering
+    const catButtons = document.querySelectorAll('.cat-pill');
+    const productCards = document.querySelectorAll('.product-card');
+    const resultCount = document.getElementById('resultCount');
+    const emptyState = document.getElementById('emptyState');
+
+    catButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            catButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.dataset.cat;
+            let visible = 0;
+            productCards.forEach(card => {
+                const match = cat === 'all' || card.dataset.cat === cat;
+                card.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            resultCount.textContent = visible;
+            emptyState.classList.toggle('hidden', visible !== 0);
+        });
     });
 
-    // Newsletter
-    document.getElementById('newsletter-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const msg = document.getElementById('newsletter-msg');
-      const btn = e.target.querySelector('button');
-      const originalText = btn.innerHTML;
+    // Cart counter + toast
+    let cartCount = 0;
+    const cartCountEl = document.getElementById('cartCount');
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    let toastTimer;
 
-      btn.innerHTML = 'Subscribing...';
-      btn.disabled = true;
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+            cartCount++;
+            cartCountEl.textContent = cartCount;
+            const name = btn.closest('.product-card').querySelector('h3').textContent;
+            toastText.textContent = `Added "${name}" to cart`;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+        });
+    });
 
-      setTimeout(() => {
-        msg.style.opacity = '1';
-        btn.innerHTML = 'Subscribed ✓';
-        btn.classList.add('from-accent', 'to-accent');
+    // Wishlist toggle
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+        });
+    });
+
+    // Countdown timer
+    let totalSeconds = 8 * 3600 + 42 * 60 + 17;
+    const hoursEl = document.getElementById('cd-hours');
+    const minsEl = document.getElementById('cd-mins');
+    const secsEl = document.getElementById('cd-secs');
+
+    setInterval(() => {
+        if (totalSeconds <= 0) { totalSeconds = 8 * 3600; }
+        totalSeconds--;
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        const s = totalSeconds % 60;
+        hoursEl.textContent = String(h).padStart(2, '0');
+        minsEl.textContent = String(m).padStart(2, '0');
+        secsEl.textContent = String(s).padStart(2, '0');
+    }, 1000);
+
+    // Newsletter form
+    document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = document.getElementById('newsletterMsg');
+        const email = document.getElementById('newsletterEmail').value;
+        msg.textContent = `You're on the list — confirmation sent to ${email}.`;
+        msg.classList.remove('hidden');
         e.target.reset();
-
-        setTimeout(() => {
-          msg.style.opacity = '0';
-          btn.innerHTML = originalText;
-          btn.classList.remove('from-accent', 'to-accent');
-          btn.disabled = false;
-        }, 3000);
-      }, 800);
     });
-  </script>
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+</script>
 
 </body>
-
 </html>
