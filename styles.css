@@ -1,0 +1,116 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.font-display {
+    font-family: 'Sora', sans-serif;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+::selection {
+    background: #FF4B36;
+    color: #F6F5F1;
+}
+
+/* --- Nova burst signature: radiating rays --- */
+.nova-burst {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.nova-burst svg {
+    width: 100%;
+    height: 100%;
+}
+
+.burst-ray {
+    transform-origin: 250px 250px;
+    animation: burstSpin 40s linear infinite;
+}
+
+@keyframes burstSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Star-cut sale badge --- */
+.star-badge {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Marquee ticker --- */
+.ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerScroll 22s linear infinite;
+}
+
+@keyframes tickerScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* --- Reveal on scroll --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cat-pill.active {
+    background: #16140F;
+    color: #F6F5F1;
+}
+
+.wishlist-btn.active i {
+    font-weight: 900;
+    color: #FF4B36;
+}
+
+.wishlist-btn.active {
+    border-color: #FF4B36;
+}
+
+#toast {
+    transform: translate(-50%, calc(100% + 1.5rem));
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+}
+
+#toast.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
