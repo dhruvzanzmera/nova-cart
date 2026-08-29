@@ -218,45 +218,26 @@
 
     <!-- Hero -->
     <section id="home" class="relative overflow-hidden">
-        <div class="nova-burst hidden md:block" style="right:-6%; top:-10%; width:640px; height:640px;">
-            <svg viewBox="0 0 500 500">
-                <g class="burst-ray" stroke="#16140F" stroke-opacity="0.08">
-                    <line x1="250" y1="250" x2="250" y2="20" stroke-width="2" />
-                    <line x1="250" y1="250" x2="440" y2="90" stroke-width="2" />
-                    <line x1="250" y1="250" x2="480" y2="250" stroke-width="2" />
-                    <line x1="250" y1="250" x2="440" y2="410" stroke-width="2" />
-                    <line x1="250" y1="250" x2="250" y2="480" stroke-width="2" />
-                    <line x1="250" y1="250" x2="60" y2="410" stroke-width="2" />
-                    <line x1="250" y1="250" x2="20" y2="250" stroke-width="2" />
-                    <line x1="250" y1="250" x2="60" y2="90" stroke-width="2" />
-                </g>
-                <circle cx="250" cy="250" r="120" fill="url(#novaGrad)" opacity="0.16" />
-                <defs>
-                    <radialGradient id="novaGrad">
-                        <stop offset="0%" stop-color="#FF4B36" />
-                        <stop offset="100%" stop-color="#FFB238" />
-                    </radialGradient>
-                </defs>
-            </svg>
-        </div>
+        <!-- Two-tone split: right panel accent -->
+        <div class="absolute right-0 inset-y-0 w-5/12  hidden md:block pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-5 md:px-8 pt-6 pb-8 md:pt-10 md:pb-12 relative z-10 grid md:grid-cols-2 gap-8 items-center"
-            style="min-height:calc(100vh - 88px); align-content:center;">
+        <div class="max-w-7xl mx-auto px-5 md:px-8 py-6 md:py-8 relative z-10 grid md:grid-cols-[1fr_1.05fr] gap-10 lg:gap-16 items-center"
+            style="min-height:calc(100vh - 120px); align-content:center;">
             <div>
                 <span
-                    class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-nova-coral bg-nova-coral/10 px-3 py-1.5 rounded-full mb-3">
+                    class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-nova-coral bg-nova-coral/10 px-3 py-1.5 rounded-full mb-4">
                     <i class="fa-solid fa-burst"></i> Season kickoff sale
                 </span>
-                <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight mb-4">
+                <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-4">
                     Everyday finds,<br>
                     <span class="bg-gradient-to-r from-nova-coral to-nova-amber bg-clip-text text-transparent">better
                         priced.</span>
                 </h1>
-                <p class="text-stone text-base max-w-md mb-5 leading-relaxed">
-                    Curated electronics, home goods, and essentials — vetted for quality, shipped fast, always backed by
-                    a 30-day return window.
+                <p class="text-stone text-base max-w-sm mb-7 leading-relaxed">
+                    Curated electronics, home goods, and essentials — vetted for quality, shipped fast, backed by a
+                    30-day return window.
                 </p>
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-3 mb-8">
                     <a href="#shop"
                         class="bg-ink text-paper font-semibold px-7 py-3.5 rounded-full hover:bg-black transition-colors inline-flex items-center gap-2">
                         Shop the sale <i class="fa-solid fa-arrow-right text-sm"></i>
@@ -266,7 +247,7 @@
                         View today's deals
                     </a>
                 </div>
-                <div class="flex items-center gap-5 mt-5 pt-5 border-t border-line text-sm text-stone">
+                <div class="flex flex-wrap items-center gap-5 text-sm text-stone border-t border-line pt-5">
                     <div class="flex items-center gap-2"><i class="fa-solid fa-truck-fast text-nova-coral"></i> Ships in
                         24h</div>
                     <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-nova-coral"></i>
@@ -276,22 +257,53 @@
                 </div>
             </div>
 
-            <div class="relative flex justify-center">
-                <div class="w-full max-w-xs" style="aspect-ratio:1/1;">
-                    <div
-                        class="w-full h-full rounded-xl2 bg-gradient-to-br from-white to-paperDeep border border-line relative overflow-hidden grid place-items-center">
-                        <img src="images/Headphones.jpg" alt="Aura Wireless Headphones"
-                            class="w-full h-full object-contain">
-                        <div class="absolute top-4 left-4 star-badge bg-nova-coral text-white shadow-lg"
-                            style="width:52px;height:52px;">
-                            <span class="font-mono font-bold text-[10px] leading-none text-center">-30%<br>OFF</span>
+            <!-- Product showcase card -->
+            <div class="flex justify-center md:justify-end">
+                <div style="max-width:400px; width:100%;">
+
+                    <!-- Card -->
+                    <div class="w-full bg-white rounded-2xl border border-line shadow-xl overflow-hidden">
+
+                        <!-- Image zone: cream bg + multiply blend makes white product bg invisible -->
+                        <div class="relative" style="aspect-ratio:16/9;">
+                            <img src="images/Headphones.jpg" alt="Aura Wireless Headphones"
+                                class="w-full h-full object-contain p-6" style="mix-blend-mode:multiply;">
+                            <!-- Sale pill -->
+                            <span
+                                class="absolute bottom-4 left-4 bg-nova-coral text-white font-mono font-bold text-xs px-3 py-1.5 rounded-full shadow">
+                                −30% OFF
+                            </span>
                         </div>
-                        <div
-                            class="absolute bottom-4 right-4 bg-white border border-line rounded-xl px-3 py-2 shadow-sm">
-                            <p class="text-[10px] text-stone mb-0.5">Featured today</p>
-                            <p class="font-display font-semibold text-xs">Aura Wireless Headphones</p>
-                            <p class="font-mono text-nova-coral font-semibold text-xs mt-0.5">$89.00</p>
+
+                        <!-- Divider -->
+                        <div class="border-t border-line"></div>
+
+                        <!-- Info zone -->
+                        <div class="px-5 py-4">
+                            <p class="font-mono text-[10px] uppercase tracking-widest text-stone mb-1">Featured today
+                            </p>
+                            <h3 class="font-display font-bold text-ink text-lg leading-tight mb-2">Aura Wireless
+                                Headphones</h3>
+                            <div class="flex items-center gap-1 text-nova-amber text-xs mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                <span class="text-stone ml-1.5">(214 reviews)</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono font-bold text-2xl">$89</span>
+                                    <span class="font-mono text-stone text-sm line-through ml-1.5">$129</span>
+                                </div>
+                                <button
+                                    class="add-to-cart bg-ink text-paper font-semibold text-sm px-5 py-2.5 rounded-full hover:bg-black transition-colors inline-flex items-center gap-2">
+                                    <i class="fa-solid fa-plus text-xs"></i> Add to cart
+                                </button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -329,8 +341,9 @@
             <div class="product-card reveal" data-cat="audio">
                 <div
                     class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
-                    <div class="aspect-[4/3] bg-paperDeep relative overflow-hidden">
-                        <img src="images/Headphones.jpg" alt="Aura Wireless Headphones" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="aspect-[4/3] bg-white relative overflow-hidden">
+                        <img src="images/Headphones.jpg" alt="Aura Wireless Headphones"
+                            class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                         <span
                             class="absolute top-3 left-3 bg-ink text-paper text-[11px] font-mono px-2 py-1 rounded-full">SALE</span>
                         <button
@@ -366,8 +379,9 @@
             <div class="product-card reveal" data-cat="home">
                 <div
                     class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
-                    <div class="aspect-[4/3] bg-paperDeep relative overflow-hidden">
-                        <img src="images/Mug.jpg" alt="Ember Ceramic Mug Set" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="aspect-[4/3] bg-white relative overflow-hidden">
+                        <img src="images/Mug.jpg" alt="Ember Ceramic Mug Set"
+                            class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                         <button
                             class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center"
                             aria-label="Save to wishlist">
@@ -398,8 +412,9 @@
             <div class="product-card reveal" data-cat="fashion">
                 <div
                     class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
-                    <div class="aspect-[4/3] bg-paperDeep relative overflow-hidden">
-                        <img src="images/Sunglasses.jpg" alt="Solstice Sunglasses" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="aspect-[4/3] bg-white relative overflow-hidden">
+                        <img src="images/Sunglasses.jpg" alt="Solstice Sunglasses"
+                            class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                         <span
                             class="absolute top-3 left-3 bg-nova-coral text-white text-[11px] font-mono px-2 py-1 rounded-full">NEW</span>
                         <button
@@ -432,8 +447,9 @@
             <div class="product-card reveal" data-cat="fitness">
                 <div
                     class="bg-white border border-line rounded-xl2 overflow-hidden group hover:border-ink/30 hover:-translate-y-1 transition-all">
-                    <div class="aspect-[4/3] bg-paperDeep relative overflow-hidden">
-                        <img src="images/Dumbbell.jpg" alt="Adjustable Dumbbell Set" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="aspect-[4/3] bg-white relative overflow-hidden">
+                        <img src="images/Dumbbell.jpg" alt="Adjustable Dumbbell Set"
+                            class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                         <button
                             class="wishlist-btn absolute top-3 right-3 w-9 h-9 rounded-full bg-white border border-line grid place-items-center"
                             aria-label="Save to wishlist">
@@ -473,33 +489,43 @@
         <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
             <div>
                 <span class="font-mono text-xs uppercase tracking-widest text-nova-coral">Trending now</span>
-                <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mt-1">The pieces people keep coming back for.</h2>
+                <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mt-1">The pieces people keep
+                    coming back for.</h2>
             </div>
-            <a href="#shop" class="text-sm font-semibold inline-flex items-center gap-2 hover:text-nova-coral transition-colors">
+            <a href="#shop"
+                class="text-sm font-semibold inline-flex items-center gap-2 hover:text-nova-coral transition-colors">
                 View all products <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
 
         <div class="grid lg:grid-cols-12 gap-4">
-            <article class="reveal lg:col-span-6 lg:row-span-2 group relative overflow-hidden rounded-xl2 bg-paperDeep min-h-[430px]">
-                <img src="images/Headphones.jpg" alt="Aura Wireless Headphones" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <article
+                class="reveal lg:col-span-6 lg:row-span-2 group relative overflow-hidden rounded-xl2 bg-paperDeep min-h-[430px]">
+                <img src="images/Headphones.jpg" alt="Aura Wireless Headphones"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                 <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent"></div>
-                <div class="absolute top-5 left-5 bg-nova-coral text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">Best seller</div>
+                <div
+                    class="absolute top-5 left-5 bg-nova-coral text-white font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
+                    Best seller</div>
                 <div class="absolute inset-x-0 bottom-0 p-6 md:p-8 text-paper">
                     <p class="font-mono text-xs uppercase tracking-widest text-nova-amber">Audio / everyday focus</p>
                     <h3 class="font-display text-2xl md:text-3xl font-bold mt-2">Aura Wireless Headphones</h3>
                     <div class="flex items-center justify-between gap-4 mt-5">
                         <span class="font-mono font-semibold text-lg">$89.00</span>
-                        <button class="add-to-cart w-11 h-11 rounded-full bg-paper text-ink grid place-items-center hover:bg-nova-amber transition-colors" aria-label="Add Aura Wireless Headphones to cart">
+                        <button
+                            class="add-to-cart w-11 h-11 rounded-full bg-paper text-ink grid place-items-center hover:bg-nova-amber transition-colors"
+                            aria-label="Add Aura Wireless Headphones to cart">
                             <i class="fa-solid fa-plus text-xs"></i>
                         </button>
                     </div>
                 </div>
             </article>
 
-            <article class="reveal lg:col-span-6 group flex items-center gap-4 rounded-xl2 border border-line bg-white p-3 hover:border-ink/30 transition-colors">
-                <div class="w-28 md:w-36 aspect-square shrink-0 overflow-hidden rounded-xl bg-paperDeep">
-                    <img src="images/Mug.jpg" alt="Ember Ceramic Mug Set" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <article
+                class="reveal lg:col-span-6 group flex items-center gap-4 rounded-xl2 border border-line bg-white p-3 hover:border-ink/30 transition-colors">
+                <div class="w-28 md:w-36 aspect-square shrink-0 overflow-hidden rounded-xl bg-white">
+                    <img src="images/Mug.jpg" alt="Ember Ceramic Mug Set"
+                        class="w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="flex-1 py-2">
                     <p class="font-mono text-[10px] uppercase tracking-widest text-stone">Home &amp; living</p>
@@ -507,39 +533,49 @@
                     <p class="text-sm text-stone mt-1">A calm start, served daily.</p>
                     <div class="flex items-center justify-between gap-3 mt-4">
                         <span class="font-mono font-semibold">$32.00</span>
-                        <button class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add Ember Ceramic Mug Set to cart">
+                        <button
+                            class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors"
+                            aria-label="Add Ember Ceramic Mug Set to cart">
                             <i class="fa-solid fa-plus text-xs"></i>
                         </button>
                     </div>
                 </div>
             </article>
 
-            <article class="reveal lg:col-span-3 group rounded-xl2 border border-line bg-white overflow-hidden hover:border-ink/30 transition-colors">
-                <div class="aspect-[4/3] overflow-hidden bg-paperDeep">
-                    <img src="images/Sunglasses.jpg" alt="Solstice Sunglasses" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <article
+                class="reveal lg:col-span-3 group rounded-xl2 border border-line bg-white overflow-hidden hover:border-ink/30 transition-colors">
+                <div class="aspect-[4/3] overflow-hidden bg-white">
+                    <img src="images/Sunglasses.jpg" alt="Solstice Sunglasses"
+                        class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-4">
                     <p class="font-mono text-[10px] uppercase tracking-widest text-stone">Fashion</p>
                     <h3 class="font-display font-semibold mt-1">Solstice Sunglasses</h3>
                     <div class="flex items-center justify-between gap-2 mt-3">
                         <span class="font-mono font-semibold">$54.00</span>
-                        <button class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add Solstice Sunglasses to cart">
+                        <button
+                            class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors"
+                            aria-label="Add Solstice Sunglasses to cart">
                             <i class="fa-solid fa-plus text-xs"></i>
                         </button>
                     </div>
                 </div>
             </article>
 
-            <article class="reveal lg:col-span-3 group rounded-xl2 border border-line bg-white overflow-hidden hover:border-ink/30 transition-colors">
-                <div class="aspect-[4/3] overflow-hidden bg-paperDeep">
-                    <img src="images/Dumbbell.jpg" alt="Adjustable Dumbbell Set" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <article
+                class="reveal lg:col-span-3 group rounded-xl2 border border-line bg-white overflow-hidden hover:border-ink/30 transition-colors">
+                <div class="aspect-[4/3] overflow-hidden bg-white">
+                    <img src="images/Dumbbell.jpg" alt="Adjustable Dumbbell Set"
+                        class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-4">
                     <p class="font-mono text-[10px] uppercase tracking-widest text-stone">Fitness</p>
                     <h3 class="font-display font-semibold mt-1">Adjustable Dumbbell Set</h3>
                     <div class="flex items-center justify-between gap-2 mt-3">
                         <span class="font-mono font-semibold">$149.00</span>
-                        <button class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors" aria-label="Add Adjustable Dumbbell Set to cart">
+                        <button
+                            class="add-to-cart w-9 h-9 rounded-full bg-ink text-paper grid place-items-center hover:bg-black transition-colors"
+                            aria-label="Add Adjustable Dumbbell Set to cart">
                             <i class="fa-solid fa-plus text-xs"></i>
                         </button>
                     </div>
@@ -597,18 +633,23 @@
         <div class="grid lg:grid-cols-[0.85fr_1.5fr] gap-8 lg:gap-14 items-start">
             <div class="reveal lg:sticky lg:top-28">
                 <span class="font-mono text-xs uppercase tracking-widest text-nova-coral">The good stuff</span>
-                <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight mt-2 mb-4">Loved by people who like useful things.</h2>
-                <p class="text-stone leading-relaxed max-w-sm">A small, carefully edited store with the kind of service you remember.</p>
+                <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight mt-2 mb-4">Loved by people who
+                    like useful things.</h2>
+                <p class="text-stone leading-relaxed max-w-sm">A small, carefully edited store with the kind of service
+                    you remember.</p>
                 <div class="mt-7 flex items-end gap-3">
                     <span class="font-display text-5xl font-bold">4.8</span>
                     <div class="pb-1">
                         <div class="flex gap-1 text-nova-amber text-sm" aria-label="4.8 out of 5 stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star-half-stroke"></i>
                         </div>
                         <p class="text-xs text-stone mt-1">From 2,400+ orders</p>
                     </div>
                 </div>
-                <a href="#shop" class="mt-7 inline-flex items-center gap-2 bg-ink text-paper font-semibold px-5 py-3 rounded-full hover:bg-black transition-colors">
+                <a href="#shop"
+                    class="mt-7 inline-flex items-center gap-2 bg-ink text-paper font-semibold px-5 py-3 rounded-full hover:bg-black transition-colors">
                     Find your next favorite <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -617,32 +658,46 @@
                 <article class="reveal border border-line rounded-xl2 bg-white p-5 md:p-6 flex flex-col min-h-[250px]">
                     <div class="flex justify-between items-start mb-8">
                         <div class="flex gap-1 text-nova-amber text-xs" aria-label="5 out of 5 stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
                         </div>
                         <i class="fa-solid fa-quote-right text-paperDeep text-2xl"></i>
                     </div>
-                    <p class="font-display font-semibold leading-relaxed">“The headphones arrived the next day and sound genuinely great. Exactly what online shopping should feel like.”</p>
-                    <div class="mt-auto pt-6 text-sm text-stone"><span class="font-semibold text-ink">Maya R.</span> · Verified buyer</div>
+                    <p class="font-display font-semibold leading-relaxed">“The headphones arrived the next day and sound
+                        genuinely great. Exactly what online shopping should feel like.”</p>
+                    <div class="mt-auto pt-6 text-sm text-stone"><span class="font-semibold text-ink">Maya R.</span> ·
+                        Verified buyer</div>
                 </article>
-                <article class="reveal border border-line rounded-xl2 bg-paperDeep p-5 md:p-6 flex flex-col min-h-[250px]">
+                <article
+                    class="reveal border border-line rounded-xl2 bg-paperDeep p-5 md:p-6 flex flex-col min-h-[250px]">
                     <div class="flex justify-between items-start mb-8">
                         <div class="flex gap-1 text-nova-amber text-xs" aria-label="5 out of 5 stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
                         </div>
                         <i class="fa-solid fa-quote-right text-white/70 text-2xl"></i>
                     </div>
-                    <p class="font-display font-semibold leading-relaxed">“I found the mug set while browsing and now it is the first thing I reach for every morning. Beautiful quality.”</p>
-                    <div class="mt-auto pt-6 text-sm text-stone"><span class="font-semibold text-ink">Jon K.</span> · Verified buyer</div>
+                    <p class="font-display font-semibold leading-relaxed">“I found the mug set while browsing and now it
+                        is the first thing I reach for every morning. Beautiful quality.”</p>
+                    <div class="mt-auto pt-6 text-sm text-stone"><span class="font-semibold text-ink">Jon K.</span> ·
+                        Verified buyer</div>
                 </article>
-                <article class="reveal border border-line rounded-xl2 bg-ink text-paper p-5 md:p-6 flex flex-col min-h-[250px]">
+                <article
+                    class="reveal border border-line rounded-xl2 bg-ink text-paper p-5 md:p-6 flex flex-col min-h-[250px]">
                     <div class="flex justify-between items-start mb-8">
                         <div class="flex gap-1 text-nova-amber text-xs" aria-label="5 out of 5 stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
                         </div>
                         <i class="fa-solid fa-quote-right text-white/20 text-2xl"></i>
                     </div>
-                    <p class="font-display font-semibold leading-relaxed">“No endless scrolling, no mystery brands. Just good picks, clear prices, and a checkout that took two minutes.”</p>
-                    <div class="mt-auto pt-6 text-sm text-paper/60"><span class="font-semibold text-paper">Priya S.</span> · Verified buyer</div>
+                    <p class="font-display font-semibold leading-relaxed">“No endless scrolling, no mystery brands. Just
+                        good picks, clear prices, and a checkout that took two minutes.”</p>
+                    <div class="mt-auto pt-6 text-sm text-paper/60"><span class="font-semibold text-paper">Priya
+                            S.</span> · Verified buyer</div>
                 </article>
             </div>
         </div>
@@ -698,7 +753,8 @@
         <div class="max-w-7xl mx-auto px-5 md:px-8 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
                 <a href="#home" class="flex items-center gap-2 mb-3">
-                    <span class="w-7 h-7 rounded-full bg-gradient-to-br from-nova-coral to-nova-amber grid place-items-center text-paper">
+                    <span
+                        class="w-7 h-7 rounded-full bg-gradient-to-br from-nova-coral to-nova-amber grid place-items-center text-paper">
                         <i class="fa-solid fa-burst text-xs"></i>
                     </span>
                     <span class="font-display font-bold">Nova Cart</span>
@@ -722,7 +778,7 @@
                 </div>
             </div>
             <div>
-               <h4 class="font-mono text-xs uppercase tracking-widest text-stone mb-4">
+                <h4 class="font-mono text-xs uppercase tracking-widest text-stone mb-4">
                     Follow
                 </h4>
 
@@ -736,8 +792,11 @@
                     <a href="#"
                         class="w-9 h-9 rounded-full border border-line flex items-center justify-center hover:border-ink hover:text-ink transition-colors"
                         aria-label="X">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"></path>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
+                            focusable="false">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.966 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z">
+                            </path>
                         </svg>
                     </a>
 
@@ -749,7 +808,8 @@
                 </div>
             </div>
         </div>
-        <div class="border-t border-line max-w-7xl mx-auto px-5 md:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-stone">
+        <div
+            class="border-t border-line max-w-7xl mx-auto px-5 md:px-8 py-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-stone">
             <p>&copy; 2026 Nova Cart. All rights reserved.</p>
             <div class="flex items-center gap-3 text-lg">
                 <i class="fa-brands fa-cc-visa"></i>
@@ -761,7 +821,8 @@
     </footer>
 
     <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ink text-paper text-sm font-medium px-5 py-3 rounded-full shadow-lg flex items-center gap-2 z-50">
+    <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ink text-paper text-sm font-medium px-5 py-3 rounded-full shadow-lg flex items-center gap-2 z-50">
         <i class="fa-solid fa-circle-check text-nova-amber"></i>
         <span id="toastText">Added to cart</span>
     </div>
