@@ -29,10 +29,24 @@ const mobilePanel = document.getElementById('mobilePanel');
 mobileToggle.addEventListener('click', () => {
     const isHidden = mobilePanel.classList.toggle('hidden');
     mobileToggle.setAttribute('aria-expanded', String(!isHidden));
+    mobilePanel.setAttribute('aria-hidden', String(isHidden));
 });
 
+function closeMobileMenu() {
+    mobilePanel.classList.add('hidden');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    mobilePanel.setAttribute('aria-hidden', 'true');
+}
+
 mobilePanel.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => mobilePanel.classList.add('hidden'));
+    link.addEventListener('click', closeMobileMenu);
+});
+
+document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !mobilePanel.classList.contains('hidden')) {
+        closeMobileMenu();
+        mobileToggle.focus();
+    }
 });
 
 // Category filtering.
@@ -116,18 +130,20 @@ document.getElementById('newsletterForm').addEventListener('submit', event => {
 
 // Custom scroll reveal with a small stagger for cards and trust items.
 const revealElements = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+    revealElements.forEach(element => element.classList.add('active'));
+} else {
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
 
-revealElements.forEach((element, index) => {
-    if (!prefersReducedMotion) {
+    revealElements.forEach((element, index) => {
         element.style.transitionDelay = `${Math.min(index * 55, 330)}ms`;
-    }
-    revealObserver.observe(element);
-});
+        revealObserver.observe(element);
+    });
+}

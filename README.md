@@ -1,40 +1,52 @@
-# NovaCart
+# Nova Cart
 
-A modern, responsive landing page and shop interface built with HTML, Tailwind CSS, and minimal JavaScript.
+Nova Cart is a responsive, single-page storefront demo for curated everyday products, home goods, audio, fitness, and fashion essentials.
 
-## Overview
+## Storefront Sections
 
-NovaCart is a polished storefront demo featuring:
-- Gradient accents, glassmorphism, and animated background blobs
-- Responsive header and mobile menu
-- Product cards with hover effects and category filters
-- Smooth scrolling and subtle page animations
+- **Home:** seasonal promotion and featured product
+- **Shop:** product grid with category filters
+- **Trending:** highlighted customer favorites
+- **Deals:** limited-time promotion with a countdown
+- **Reviews:** customer testimonials and ratings
+- **Trust:** shipping, returns, checkout, and support information
+- **Newsletter:** email signup interaction
+- **Footer:** store links and social links
 
 ## Features
 
-- Responsive layout for desktop and mobile
-- Custom Tailwind theme with brand colors and utility classes
-- Animated product preview interactions
-- Custom scrollbar and gradient text styles
-- Standalone single-page implementation using Tailwind CDN
+- Responsive navigation with a mobile menu
+- Native smooth scrolling for in-page links, with reduced-motion support
+- Scroll-triggered reveal effects with a static fallback when reduced motion is preferred or `IntersectionObserver` is unavailable
+- Product category filtering and live result count
+- Add-to-cart counter with an on-page confirmation toast
+- Wishlist toggle
+- Promotional countdown timer
+- Newsletter form confirmation in the page
+- Search field and product presentation UI
+- Search-engine and social-sharing metadata
 
-## Tech Stack
+## Built With
 
-- HTML
-- CSS
-- Tailwind CSS (via CDN)
-- Vanilla JavaScript
+- HTML5
+- CSS in `styles.css`
+- Vanilla JavaScript in `script.js`
+- Tailwind CSS via CDN
+- Google Fonts and Font Awesome via CDN
 
-## How to Run
+## Run Locally
 
-1. Open `index.html` in your browser.
-2. No build step or local server is required.
+Open `index.html` in a browser, or serve the folder with a local development server such as VS Code Live Server. No build step is required.
 
-## Notes
+Fonts, icons, and Tailwind CSS load from external CDNs, so an internet connection is needed for those assets.
 
-- This project uses the Tailwind CSS CDN for easy setup.
-- The page is a static prototype and does not include a backend or shopping cart persistence.
+## Project Files
 
-## License
+- `index.html` — page content, metadata, and embedded page styles
+- `styles.css` — shared typography, animations, and UI styles
+- `script.js` — navigation, scroll effects, product interactions, countdown, and newsletter behavior
+- `images/` — local product images and other static image assets
 
-Feel free to use and modify this demo for learning or portfolio purposes.
+## Prototype Scope
+
+This is a front-end demo, not a connected ecommerce backend. The cart count and wishlist are session-only UI state; checkout, search results, and newsletter subscriptions are not persisted or sent to a server.

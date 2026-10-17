@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+}
+
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -107,10 +112,14 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
     *,
     *::before,
     *::after {
-        animation-duration: 0.001ms !important;
+        animation: none !important;
         transition-duration: 0.001ms !important;
     }
 }
