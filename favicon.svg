@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Nova Cart">
+  <defs>
+    <linearGradient id="nova" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4B36"/>
+      <stop offset="1" stop-color="#FFB238"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#nova)"/>
+  <path fill="#F6F5F1" d="M32 12l4.2 11.8L48 19.2l-5.3 11.6L54 34l-11.8 3.2L47 48l-11.2-6.2L32 54l-3.8-12.2L17 48l4.8-10.8L10 34l11.3-3.2L16 19.2l11.8 4.6L32 12z"/>
+  <circle cx="32" cy="33" r="7" fill="#16140F"/>
+  <circle cx="32" cy="33" r="3" fill="#F6F5F1"/>
+</svg>
